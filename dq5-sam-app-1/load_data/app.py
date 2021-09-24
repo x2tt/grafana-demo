@@ -11,7 +11,7 @@ logger.setLevel(logging.INFO)
 def lambda_handler(event, context):
     print('dq5-lambda-1 Lambda invoked')
     if random.random() < 0.5:
-        rowsLoaded = random.randrange(1, 21)
+        rows_loaded = random.randrange(1, 21)
         con = snowflake.connector.connect(
             user='k',
             password='Y9h3#Ejg#MgU75(C',
@@ -21,15 +21,13 @@ def lambda_handler(event, context):
             schema='SYSADMIN',
         )
         try:
-            con.cursor().execute("INSERT INTO DQ5_DESTINATION_TABLE_1 VALUES('test')")
+            for x in range(rows_loaded):
+                con.cursor().execute("INSERT INTO DQ5_DESTINATION_TABLE_1 VALUES('test')")
             con.commit()
-        except Exception as e:
-            con.rollback()
-            raise e
         finally:
             con.close()
-        time.sleep(rowsLoaded)
-        logger.info({'rowsLoaded': rowsLoaded})
+        time.sleep(rows_loaded)
+        logger.info({'rows_loaded': rows_loaded})
         logger.info('dq5-lambda-1 Lambda ran successfully')
     else:
         logger.error('dq5-lambda-1 Lambda failed')
