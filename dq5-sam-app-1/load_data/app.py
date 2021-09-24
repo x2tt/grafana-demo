@@ -1,6 +1,7 @@
 import logging
 import random
 import time
+import json
 
 import snowflake.connector
 
@@ -27,7 +28,7 @@ def lambda_handler(event, context):
         finally:
             con.close()
         time.sleep(rows_loaded)
-        logger.info({'rows_loaded': rows_loaded})
+        logger.info(json.dumps({'rows_loaded': rows_loaded}))
         logger.info('dq5-lambda-1 Lambda ran successfully')
     else:
         logger.error('dq5-lambda-1 Lambda failed')
