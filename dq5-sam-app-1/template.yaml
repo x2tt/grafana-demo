@@ -38,16 +38,16 @@ Resources:
             Description: Run load_data
             Enabled: True
 
-Outputs:
-  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
-  # Find out more about other implicit resources you can reference within SAM
-  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
-  GetSnowflakeMetricsApi:
-    Description: "API Gateway endpoint URL for Prod stage for GetSnowflakeMetrics function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
-  GetSnowflakeMetricsFunction:
-    Description: "GetSnowflakeMetrics Lambda Function ARN"
-    Value: !GetAtt GetSnowflakeMetricsFunction.Arn
-  GetSnowflakeMetricsFunctionIamRole:
-    Description: "Implicit IAM Role created for GetSnowflakeMetrics function"
-    Value: !GetAtt GetSnowflakeMetricsFunctionRole.Arn
+#Outputs:
+#  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+#  # Find out more about other implicit resources you can reference within SAM
+#  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+#  GetSnowflakeMetricsApi:
+#    Description: "API Gateway endpoint URL for Prod stage for GetSnowflakeMetrics function"
+#    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
+#  GetSnowflakeMetricsFunction:
+#    Description: "GetSnowflakeMetrics Lambda Function ARN"
+#    Value: !GetAtt GetSnowflakeMetricsFunction.Arn
+#  GetSnowflakeMetricsFunctionIamRole:
+#    Description: "Implicit IAM Role created for GetSnowflakeMetrics function"
+#    Value: !GetAtt GetSnowflakeMetricsFunctionRole.Arn
