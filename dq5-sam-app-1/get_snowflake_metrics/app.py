@@ -1,7 +1,7 @@
 import json
-
 # import requests
 
+import snowflake.connector
 
 def lambda_handler(event, context):
     """Sample pure Lambda function

@@ -8,32 +8,46 @@ Description: >
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
-    Timeout: 3
+    Timeout: 900
 
 Resources:
-  HelloWorldFunction:
+  GetSnowflakeMetricsFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: hello_world/
+      CodeUri: get_snowflake_metrics/
       Handler: app.lambda_handler
       Runtime: python3.9
       Events:
-        HelloWorld:
+        GetSnowflakeMetricsEvent:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /hello
             Method: get
+  LoadDataFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: load_data/
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Events:
+        LoadDataEvent:
+          Type: Schedule
+          Properties:
+            Schedule: rate(1 minute)
+            Name: dq5-load-data-schedule
+            Description: Run load_data
+            Enabled: True
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
-  HelloWorldApi:
-    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+  GetSnowflakeMetricsApi:
+    Description: "API Gateway endpoint URL for Prod stage for GetSnowflakeMetrics function"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
-  HelloWorldFunction:
-    Description: "Hello World Lambda Function ARN"
-    Value: !GetAtt HelloWorldFunction.Arn
-  HelloWorldFunctionIamRole:
-    Description: "Implicit IAM Role created for Hello World function"
-    Value: !GetAtt HelloWorldFunctionRole.Arn
+  GetSnowflakeMetricsFunction:
+    Description: "GetSnowflakeMetrics Lambda Function ARN"
+    Value: !GetAtt GetSnowflakeMetricsFunction.Arn
+  GetSnowflakeMetricsFunctionIamRole:
+    Description: "Implicit IAM Role created for GetSnowflakeMetrics function"
+    Value: !GetAtt GetSnowflakeMetricsFunctionRole.Arn
